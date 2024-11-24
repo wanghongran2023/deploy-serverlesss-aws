@@ -8,12 +8,12 @@ const bucketName = process.env.S3_BUCKET;
 
 export async function handler(event) {
   
-	const itemId=uuidv4()
+	const todoId=uuidv4()
 	const newTodoContent = JSON.parse(event.body)
 
   	const newTodo ={
 		userId: "test",
-		todoId: itemId,
+		todoId: todoId,
 		createdAt: new Date().toISOString(),
 		attachmentUrl: 'https://'+bucketName+'.s3.amazonaws.com/'+todoId+'.png',
 		...newTodoContent
