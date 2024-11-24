@@ -37,7 +37,7 @@ export async function handler(event) {
                 		'Access-Control-Allow-Origin': '*',
 				'Access-Control-Allow-Credentials': true
             		},
-            		body: JSON.stringify(newTodo)
+			body: JSON.stringify({"item":newTodo})
         	};
     	} catch (error) {
         	console.error('Error querying DynamoDB:', error);
