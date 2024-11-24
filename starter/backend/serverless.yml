@@ -16,6 +16,7 @@ provider:
     TODO_INDEX: Todo_index_wang
     S3_BUCKET: imagewang202411
     URL_EXPIRATION: 36000
+    AUTH_ARN: arn:aws:lambda:us-east-1:765848051216:function:serverless-todo-app-dev-Auth
   
   iam:
     role:
@@ -56,7 +57,7 @@ functions:
           path: todos
           cors: true
           authorizer:
-            authorizerId: !Ref Auth
+            arn: ${self:provider.environment.AUTH_ARN}
 
   # TODO: Configure this function
   CreateTodo:
@@ -67,7 +68,7 @@ functions:
           path: todos
           cors: true
           authorizer:
-            authorizerId: !Ref Auth
+            arn: ${self:provider.environment.AUTH_ARN}
           request:
             schemas:
               application/json: ${file(models/createTodoValidate.json)}
@@ -81,7 +82,7 @@ functions:
           path: todos/{todoId}
           cors: true
           authorizer:
-            authorizerId: !Ref Auth
+            arn: ${self:provider.environment.AUTH_ARN}
           request:
             schemas:
               application/json: ${file(models/updateTodoValidate.json)}
@@ -95,7 +96,7 @@ functions:
           path: todos/{todoId}
           cors: true
           authorizer:
-            authorizerId: !Ref Auth
+            arn: ${self:provider.environment.AUTH_ARN}
 
   # TODO: Configure this function
   GenerateUploadUrl:
@@ -106,7 +107,7 @@ functions:
           path: todos/{todoId}/attachment
           cors: true
           authorizer:
-            authorizerId: !Ref Auth
+            arn: ${self:provider.environment.AUTH_ARN}
 
 resources:
   Resources:
