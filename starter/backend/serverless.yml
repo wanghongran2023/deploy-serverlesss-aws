@@ -10,6 +10,15 @@ provider:
   runtime: nodejs18.x
   environment:
     TODO_TABLE: Todos-wang
+    TODO_INDEX: Todo_index_wang
+  
+  iam:
+    role:
+      statements:
+        - Effect: Allow
+          Action: 
+            - dynamodb:Scan
+          Resource: arn:aws:dynamodb:us-east-1:765848051216:table/${self:provider.environment.TODO_TABLE} 
 
 functions:
 
@@ -62,10 +71,39 @@ resources:
       Type: AWS::DynamoDB::Table
       Properties:
         AttributeDefinitions:
-          - AttributeName: id
+          - AttributeName: todoId
             AttributeType: S
+        AttributeDefinitions:
+          - AttributeName: userId
+            AttributeType: S
+        AttributeDefinitions:
+          - AttributeName: attachmentUrl
+            AttributeType: S
+        AttributeDefinitions:
+          - AttributeName: dueDate
+            AttributeType: S
+        AttributeDefinitions:
+          - AttributeName: createdAt
+            AttributeType: S
+        AttributeDefinitions:
+          - AttributeName: name
+            AttributeType: S
+        AttributeDefinitions:
+          - AttributeName: done
+            AttributeType: BOOL
         KeySchema:
-          - AttributeName: id
+          - AttributeName: userId
             KeyType: HASH
+          - AttributeName: todoId
+            KeyType: RANGE
         BillingMode: PAY_PER_REQUEST
         TableName: ${self:provider.environment.TODO_TABLE}
+        LocalSecondaryIndexes:
+          - IndexName: ${self:provider.environment.TODOS_INDEX}
+            KeySchema:
+              - AttributeName: userId
+                KeyType: HASH
+              - AttributeName: createdAt
+                KeyType: RANGE
+            Projection:
+                ProjectionType: ALL
