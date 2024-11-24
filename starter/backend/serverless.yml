@@ -70,28 +70,20 @@ resources:
     ToDoDynamoDBTable:
       Type: AWS::DynamoDB::Table
       Properties:
+        TableName: ${self:provider.environment.TODO_TABLE}
         AttributeDefinitions:
           - AttributeName: todoId
             AttributeType: S
           - AttributeName: userId
             AttributeType: S
-          - AttributeName: attachmentUrl
-            AttributeType: S
-          - AttributeName: dueDate
-            AttributeType: S
           - AttributeName: createdAt
             AttributeType: S
-          - AttributeName: name
-            AttributeType: S
-          - AttributeName: done
-            AttributeType: BOOL
         KeySchema:
           - AttributeName: userId
             KeyType: HASH
           - AttributeName: todoId
             KeyType: RANGE
         BillingMode: PAY_PER_REQUEST
-        TableName: ${self:provider.environment.TODO_TABLE}
         LocalSecondaryIndexes:
           - IndexName: ${self:provider.environment.TODO_INDEX}
             KeySchema:
@@ -100,4 +92,5 @@ resources:
               - AttributeName: createdAt
                 KeyType: RANGE
             Projection:
-                ProjectionType: ALL
+              ProjectionType: ALL
+
