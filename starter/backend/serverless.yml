@@ -73,22 +73,16 @@ resources:
         AttributeDefinitions:
           - AttributeName: todoId
             AttributeType: S
-        AttributeDefinitions:
           - AttributeName: userId
             AttributeType: S
-        AttributeDefinitions:
           - AttributeName: attachmentUrl
             AttributeType: S
-        AttributeDefinitions:
           - AttributeName: dueDate
             AttributeType: S
-        AttributeDefinitions:
           - AttributeName: createdAt
             AttributeType: S
-        AttributeDefinitions:
           - AttributeName: name
             AttributeType: S
-        AttributeDefinitions:
           - AttributeName: done
             AttributeType: BOOL
         KeySchema:
