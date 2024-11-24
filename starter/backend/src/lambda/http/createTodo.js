@@ -15,7 +15,7 @@ export async function handler(event) {
 		userId: "test",
 		todoId: itemId,
 		createdAt: new Date().toISOString(),
-		attachmentUrl: 'https://${bucketName}.s3.amazonaws.com/${todoId}'+'.png',
+		attachmentUrl: 'https://'+bucketName+'.s3.amazonaws.com/'+todoId+'.png',
 		...newTodoContent
 	}
 
