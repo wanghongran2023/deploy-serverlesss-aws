@@ -11,7 +11,7 @@ provider:
   environment:
     TODO_TABLE: Todos-wang
     TODO_INDEX: Todo_index_wang
-    S3_BUCKET: Image_wang
+    S3_BUCKET: image_wang
     URL_EXPIRATION: 36000
   
   iam:
