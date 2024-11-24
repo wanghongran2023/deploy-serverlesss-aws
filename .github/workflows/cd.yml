@@ -26,9 +26,8 @@ jobs:
           node-version: 14.x
 
       - name: serverless deploy
-        working-directory: starter/backend
         uses: serverless/github-action@v3.1
         with:
-          args: -c "npm ci && serverless deploy"
+          args: -c " cd starter/backend && npm ci && serverless deploy"
           #args: -c "serverless --version"
           entrypoint: /bin/bash
