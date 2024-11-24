@@ -1,6 +1,7 @@
 import { DynamoDB } from '@aws-sdk/client-dynamodb'
 import { DynamoDBDocument } from '@aws-sdk/lib-dynamodb'
 import { v4 as uuidv4 } from 'uuid'
+import { parseUserId } from '../../auth/utils.mjs'
 import AWSXRay from 'aws-xray-sdk-core'
 
 const dynamoDb = new DynamoDB()
@@ -13,9 +14,11 @@ export async function handler(event) {
   
 	const todoId=uuidv4()
 	const newTodoContent = JSON.parse(event.body)
+	const authorization = event.headers.Authorization
+	const userId = parseUserId(authorization)
 
   	const newTodo ={
-		userId: "test",
+		userId: userId,
 		todoId: todoId,
 		createdAt: new Date().toISOString(),
 		attachmentUrl: 'https://'+bucketName+'.s3.amazonaws.com/'+todoId+'.png',

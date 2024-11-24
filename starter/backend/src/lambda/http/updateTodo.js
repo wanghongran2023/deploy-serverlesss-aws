@@ -1,6 +1,7 @@
 import { DynamoDB } from '@aws-sdk/client-dynamodb'
 import { DynamoDBDocument } from '@aws-sdk/lib-dynamodb'
 import AWSXRay from 'aws-xray-sdk-core'
+import { parseUserId } from '../../auth/utils.mjs'
 
 const dynamoDb = new DynamoDB()
 const dynamoDbXRay = AWSXRay.captureAWSv3Client(dynamoDb)
@@ -11,6 +12,8 @@ export async function handler(event) {
 
   	const todoId = event.pathParameters.todoId
   	const updatedTodo = JSON.parse(event.body)
+	const authorization = event.headers.Authorization
+        const userId = parseUserId(authorization)
 	
 	let updateExpression = 'SET ';
 	let expressionAttributeValues = {};
@@ -37,7 +40,7 @@ export async function handler(event) {
         	const result = await dynamoDbDocument.update({
 			TableName: todoTable,
 			Key: {
-            			userId: "test",
+            			userId: userId,
             			todoId: todoId
         		},
         		UpdateExpression: updateExpression,

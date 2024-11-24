@@ -1,6 +1,7 @@
 import { DynamoDB } from '@aws-sdk/client-dynamodb'
 import { DynamoDBDocument } from '@aws-sdk/lib-dynamodb'
 import AWSXRay from 'aws-xray-sdk-core'
+import { parseUserId } from '../../auth/utils.mjs'
 
 const dynamoDb = new DynamoDB()
 const dynamoDbXRay = AWSXRay.captureAWSv3Client(dynamoDb)
@@ -9,10 +10,17 @@ const todoTable = process.env.TODO_TABLE
 
 export async function handler(event) {
 	console.log("query dynamodb")
+	const authorization = event.headers.Authorization
+        const userId = parseUserId(authorization)
+
 	try {
-        	const result = await dynamoDbDocument.scan({
-            		TableName: todoTable
-        	});
+        	const result = await dynamoDbDocument.query({
+    			TableName: todoTable,
+    			KeyConditionExpression: "userId = :userId",
+    			ExpressionAttributeValues: {
+        			":userId": userId,
+    			},
+		});
         	const items = result.Items;
 
         	return {
@@ -21,7 +29,7 @@ export async function handler(event) {
                 		'Access-Control-Allow-Origin': '*',
 				'Access-Control-Allow-Credentials': true
             		},
-            		body: JSON.stringify(items)
+            		body: JSON.stringify({"items":items})
         	};
     	} catch (error) {
         	console.error('Error querying DynamoDB:', error);
