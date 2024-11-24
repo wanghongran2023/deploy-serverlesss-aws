@@ -13,6 +13,7 @@ export async function handler(event) {
   	const newTodo ={
 		userId: "test",
 		todoId: itemId,
+		createdAt: new Date().toISOString(),
 		...newTodoContent
 	}
 
