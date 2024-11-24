@@ -28,7 +28,9 @@ const jwksUrl = 'https://dev-oqph8cdhvgoj26i6.us.auth0.com/.well-known/jwks.json
 export async function handler(event) {
   try {
     const jwtToken = await verifyToken(event.authorizationToken)
-
+    logger.info('---------------------');
+    logger.info(jwtToken);
+    logger.info('---------------------');
     return {
       principalId: jwtToken.sub,
       policyDocument: {
@@ -63,9 +65,6 @@ export async function handler(event) {
 
 async function verifyToken(authHeader) {
   const token = getToken(authHeader);
-  logger.info('---------------------');
-  logger.info(token);
-  logger.info('---------------------');
   try {
     return jsonwebtoken.verify(token, certificate, { algorithms: ['RS256'] });
   } catch (error) {
