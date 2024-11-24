@@ -17,8 +17,11 @@ export async function handler(event) {
 		updateFields.push('dueDate = :dueDate');
 		expressionAttributeValues[':dueDate'] = updatedTodo.dueDate;
 	}
+	
+	// attribute name is reserved in update statement
+	const expressionAttributeNames = {"todoName": "name"}
 	if (updatedTodo.name) {
-		updateFields.push('name = :name');
+		updateFields.push('todoName = :name');
 		expressionAttributeValues[':name'] = updatedTodo.name;
 	}
 	if (updatedTodo.done !== undefined) {
@@ -35,6 +38,7 @@ export async function handler(event) {
             			todoId: todoId
         		},
         		UpdateExpression: updateExpression,
+			ExpressionAttributeNames: expressionAttributeNames,
         		ExpressionAttributeValues: expressionAttributeValues,
         		ReturnValues: 'ALL_NEW'
 		})
@@ -45,7 +49,7 @@ export async function handler(event) {
                 		'Access-Control-Allow-Origin': '*',
 				'Access-Control-Allow-Credentials': true
             		},
-            		body: JSON.stringify(newTodo)
+            		body: JSON.stringify(result)
         	};
     	} catch (error) {
         	console.error('Error update DynamoDB:', error);
