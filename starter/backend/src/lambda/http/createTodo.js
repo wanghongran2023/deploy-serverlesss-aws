@@ -19,6 +19,7 @@ export async function handler(event) {
   	const newTodo ={
 		userId: userId,
 		todoId: todoId,
+		done: false
 		createdAt: new Date().toISOString(),
 		attachmentUrl: 'https://'+bucketName+'.s3.amazonaws.com/'+todoId+'.png',
 		...newTodoContent
