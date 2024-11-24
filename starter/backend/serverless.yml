@@ -78,6 +78,14 @@ resources:
             AttributeType: S
           - AttributeName: createdAt
             AttributeType: S
+          - AttributeName: attachmentUrl
+            AttributeType: S
+          - AttributeName: dueDate
+            AttributeType: S
+          - AttributeName: name
+            AttributeType: S
+          - AttributeName: done
+            AttributeType: BOOL
         KeySchema:
           - AttributeName: userId
             KeyType: HASH

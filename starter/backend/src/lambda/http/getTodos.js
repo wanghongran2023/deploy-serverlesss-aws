@@ -4,7 +4,7 @@ import { DynamoDBDocument } from '@aws-sdk/lib-dynamodb'
 const dynamoDbClient = DynamoDBDocument.from(new DynamoDB())
 const todoTable = process.env.TODO_TABLE
 
-export function handler(event) {
+export async function handler(event) {
 	console.log("query dynamodb")
 	try {
         	const result = await dynamoDbClient.scan({
