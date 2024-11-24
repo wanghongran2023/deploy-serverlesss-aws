@@ -43,6 +43,9 @@ functions:
           method: post
           path: todos
           cors: true
+          request:
+            schemas:
+              application/json: ${file(models/createTodoValidate.json)}
 
   # TODO: Configure this function
   UpdateTodo:
