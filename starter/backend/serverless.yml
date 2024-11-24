@@ -40,7 +40,7 @@ provider:
             - xray:GetSamplingRules
             - xray:GetSamplingTargets
             - xray:GetSamplingStatisticSummaries
-          Resource: *
+          Resource: "*"
 
 functions:
 
