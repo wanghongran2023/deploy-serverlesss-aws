@@ -56,7 +56,6 @@ functions:
           path: todos
           cors: true
           authorizer:
-            type: AWS_IAM
             authorizerId: !Ref Auth
 
   # TODO: Configure this function
@@ -68,7 +67,6 @@ functions:
           path: todos
           cors: true
           authorizer:
-            type: AWS_IAM
             authorizerId: !Ref Auth
           request:
             schemas:
@@ -83,7 +81,6 @@ functions:
           path: todos/{todoId}
           cors: true
           authorizer:
-            type: AWS_IAM
             authorizerId: !Ref Auth
           request:
             schemas:
@@ -98,7 +95,6 @@ functions:
           path: todos/{todoId}
           cors: true
           authorizer:
-            type: AWS_IAM
             authorizerId: !Ref Auth
 
   # TODO: Configure this function
@@ -110,7 +106,6 @@ functions:
           path: todos/{todoId}/attachment
           cors: true
           authorizer:
-            type: AWS_IAM
             authorizerId: !Ref Auth
 
 resources:
