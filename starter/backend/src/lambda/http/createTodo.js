@@ -4,6 +4,7 @@ import { v4 as uuidv4 } from 'uuid'
 
 const dynamoDbDocument = DynamoDBDocument.from(new DynamoDB())
 const todoTable = process.env.TODO_TABLE
+const bucketName = process.env.S3_BUCKET;
 
 export async function handler(event) {
   
@@ -14,6 +15,7 @@ export async function handler(event) {
 		userId: "test",
 		todoId: itemId,
 		createdAt: new Date().toISOString(),
+		attachmentUrl: 'https://${bucketName}.s3.amazonaws.com/${todoId}'+'.png',
 		...newTodoContent
 	}
 

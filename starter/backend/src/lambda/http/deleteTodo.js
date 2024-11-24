@@ -22,7 +22,7 @@ export async function handler(event) {
 				'Access-Control-Allow-Origin': '*',
 				'Access-Control-Allow-Credentials': true,
 			},
-			body: JSON.stringify({ message: 'Item deleted successfully', result })
+			body: null
 		};
 	} catch (error) {
 		console.error('Error deleting item from DynamoDB:', error);
