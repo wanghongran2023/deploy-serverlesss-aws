@@ -1,24 +1,24 @@
 {
-	"$schema": "http://json-schema.org/draft-04/schema#",
-	"title": "create todo validate request",
-	"type": "object",
-	"properties": {
-		"todoId": { "type":"string" },
-		"userId": { "type":"string" },
-		"attachmentUrl": { "type":"string" },
-		"dueDate": { "type":"string" },
-		"createdAt": { "type":"string" },
-		"name": { "type":"string" },
-		"done": { "type":"boolean" }
-	},
-	"required":{
-		"todoId",
-		"userId",
-		"createdAt",
-		"dueDate",
-		"name",
-		"done"
-	},
-	"additionalProperties": false
-
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "title": "create todo validate request",
+    "type": "object",
+    "properties": {
+        "todoId": { "type": "string" },
+        "userId": { "type": "string" },
+        "attachmentUrl": { "type": "string" },
+        "dueDate": { "type": "string" },
+        "createdAt": { "type": "string" },
+        "name": { "type": "string" },
+        "done": { "type": "boolean" }
+    },
+    "required": [
+        "todoId",
+        "userId",
+        "createdAt",
+        "dueDate",
+        "name",
+        "done"
+    ],
+    "additionalProperties": false
 }
+
