@@ -7,7 +7,7 @@ frameworkVersion: '3'
 
 provider:
   name: aws
-  runtime: nodejs14.x
+  runtime: nodejs18.x
   environment:
     TODO_TABLE: Todos-wang
     TODO_INDEX: Todo_index_wang
