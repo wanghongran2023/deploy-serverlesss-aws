@@ -3,7 +3,7 @@ import jsonwebtoken from 'jsonwebtoken'
 import { createLogger } from '../../utils/logger.mjs'
 
 const logger = createLogger('auth')
-const certificate = '-----BEGIN CERTIFICATE-----
+const certificate = `-----BEGIN CERTIFICATE-----
 MIIDHTCCAgWgAwIBAgIJGtv631mrgNAzMA0GCSqGSIb3DQEBCwUAMCwxKjAoBgNV
 BAMTIWRldi1vcXBoOGNkaHZnb2oyNmk2LnVzLmF1dGgwLmNvbTAeFw0yNDExMjQw
 OTM5MzNaFw0zODA4MDMwOTM5MzNaMCwxKjAoBgNVBAMTIWRldi1vcXBoOGNkaHZn
@@ -21,7 +21,7 @@ HCizhlg3YJPd3dDdeioUgNzpnukTS1popE+bAlkhxCPE3oMTYVIAXCxzZafW9+lb
 QgHksds+fHemUmGp93dZD0LOPsJFTys1u/vZwy+Kf1PwHazS2OOnl9AyQGikjpaO
 wnUUW7xWsBy3h3P+7tad+Sc4G4+fJ6K5kmzlW1n+nlvgIYUsrL5Y+2A4KXHGe06k
 BgzhvkCGJP/Z+BRVIOwI+Ic91Gd4Q5jXgcKS8WSLUVY4
------END CERTIFICATE-----'
+-----END CERTIFICATE-----`
 
 const jwksUrl = 'https://dev-oqph8cdhvgoj26i6.us.auth0.com/.well-known/jwks.json'
 
@@ -62,11 +62,17 @@ export async function handler(event) {
 }
 
 async function verifyToken(authHeader) {
-  const token = getToken(authHeader)
-  const jwt = jsonwebtoken.decode(token, { complete: true })
-  
-  return jsonwebtoken.verify(token,certificate,{ algorithms: ['RS256'] });
+  const token = getToken(authHeader);
+  logger.info('---------------------');
+  logger.info(token);
+  logger.info('---------------------');
+  try {
+    return jsonwebtoken.verify(token, certificate, { algorithms: ['RS256'] });
+  } catch (error) {
+    throw new Error('Token verification failed: ' + error.message);
+  }
 }
+
 
 function getToken(authHeader) {
   if (!authHeader) throw new Error('No authentication header')
@@ -76,6 +82,10 @@ function getToken(authHeader) {
 
   const split = authHeader.split(' ')
   const token = split[1]
+  
+  logger.info('---------------------');
+  logger.info(token);
+  logger.info('---------------------');
 
   return token
 }
