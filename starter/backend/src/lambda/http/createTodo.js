@@ -1,8 +1,11 @@
 import { DynamoDB } from '@aws-sdk/client-dynamodb'
 import { DynamoDBDocument } from '@aws-sdk/lib-dynamodb'
 import { v4 as uuidv4 } from 'uuid'
+import AWSXRay from 'aws-xray-sdk-core'
 
-const dynamoDbDocument = DynamoDBDocument.from(new DynamoDB())
+const dynamoDb = new DynamoDB()
+const dynamoDbXRay = AWSXRay.captureAWSv3Client(dynamoDb)
+const dynamoDbDocument = DynamoDBDocument.from(dynamoDbXRay)
 const todoTable = process.env.TODO_TABLE
 const bucketName = process.env.S3_BUCKET;
 

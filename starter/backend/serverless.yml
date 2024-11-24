@@ -8,6 +8,9 @@ frameworkVersion: '3'
 provider:
   name: aws
   runtime: nodejs18.x
+  tracing:
+    lambda: true
+    apiGateway: true
   environment:
     TODO_TABLE: Todos-wang
     TODO_INDEX: Todo_index_wang
