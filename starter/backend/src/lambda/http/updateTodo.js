@@ -8,6 +8,24 @@ export async function handler(event) {
 
   	const todoId = event.pathParameters.todoId
   	const updatedTodo = JSON.parse(event.body)
+	
+	let updateExpression = 'SET ';
+	let expressionAttributeValues = {};
+	let updateFields = [];
+	  
+	if (updatedTodo.dueDate) {
+		updateFields.push('dueDate = :dueDate');
+		expressionAttributeValues[':dueDate'] = updatedTodo.dueDate;
+	}
+	if (updatedTodo.name) {
+		updateFields.push('name = :name');
+		expressionAttributeValues[':name'] = updatedTodo.name;
+	}
+	if (updatedTodo.done !== undefined) {
+		updateFields.push('done = :done');
+		expressionAttributeValues[':done'] = updatedTodo.done;
+	}
+	updateExpression += updateFields.join(', ');
 
 	try {
         	const result = await dynamoDbDocument.update({
@@ -16,12 +34,8 @@ export async function handler(event) {
             			userId: "test",
             			todoId: todoId
         		},
-        		UpdateExpression: 'SET dueDate = :dueDate, name = :name, done = :done',
-        		ExpressionAttributeValues: {
-            			':dueDate': updatedTodo.dueDate,
-           	 		':name': updatedTodo.name,
-            			':done': updatedTodo.done
-        		},
+        		UpdateExpression: updateExpression,
+        		ExpressionAttributeValues: expressionAttributeValues,
         		ReturnValues: 'ALL_NEW'
 		})
 
