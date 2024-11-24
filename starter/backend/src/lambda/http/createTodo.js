@@ -1,6 +1,6 @@
 import { DynamoDB } from '@aws-sdk/client-dynamodb'
 import { DynamoDBDocument } from '@aws-sdk/lib-dynamodb'
-import { v4 as uuidv4 } from 'uuid
+import { v4 as uuidv4 } from 'uuid'
 
 const dynamoDbDocument = DynamoDBDocument.from(new DynamoDB())
 const todoTable = process.env.TODO_TABLE
@@ -17,7 +17,7 @@ export async function handler(event) {
 	}
 
 	try {
-        	const dynamoDbDocument.put({
+        	await dynamoDbDocument.put({
 			TableName: todoTable,
 			Item: newTodo
 		})
