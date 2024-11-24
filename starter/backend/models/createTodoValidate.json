@@ -12,9 +12,6 @@
         "done": { "type": "boolean" }
     },
     "required": [
-        "todoId",
-        "userId",
-        "createdAt",
         "dueDate",
         "name",
         "done"
