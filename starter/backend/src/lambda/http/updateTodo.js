@@ -19,9 +19,9 @@ export async function handler(event) {
 	}
 	
 	// attribute name is reserved in update statement
-	const expressionAttributeNames = {"todoName": "name"}
+	const expressionAttributeNames = {"#name": "name"}
 	if (updatedTodo.name) {
-		updateFields.push('todoName = :name');
+		updateFields.push('#name = :name');
 		expressionAttributeValues[':name'] = updatedTodo.name;
 	}
 	if (updatedTodo.done !== undefined) {
