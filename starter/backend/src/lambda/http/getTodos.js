@@ -6,19 +6,24 @@ const todoTable = process.env.TODO_TABLE
 
 export function handler(event) {
 	console.log("query dynamodb")
-	
-	const result = await dynamoDbClient.scan({
-		TableName: groupsTable
-	})
-	const items = result.Items
+	try {
+        	const result = await dynamoDbClient.scan({
+            		TableName: todoTable
+        	});
+        	const items = result.Items;
 
-	return {
-		statusCode: 200,
-		headers:{
-			'Access-Control-Allow-Origin': '*'
-		},
-		body: JSON.stringify({
-			items
-		})
-	}
+        	return {
+            		statusCode: 200,
+            		headers: {
+                		'Access-Control-Allow-Origin': '*'
+            		},
+            		body: JSON.stringify(items)
+        	};
+    	} catch (error) {
+        	console.error('Error querying DynamoDB:', error);
+        	return {
+            		statusCode: 500,
+            		body: JSON.stringify({ message: 'Internal Server Error' })
+        	};
+    	}
 }
