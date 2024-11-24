@@ -4,7 +4,7 @@ import AWSXRay from 'aws-xray-sdk-core'
 
 const dynamoDb = new DynamoDB()
 const dynamoDbXRay = AWSXRay.captureAWSv3Client(dynamoDb)
-const dynamoDbClient = DynamoDBDocument.from(dynamoDbXRay)
+const dynamoDbDocument = DynamoDBDocument.from(dynamoDbXRay)
 const todoTable = process.env.TODO_TABLE
 
 export async function handler(event) {
