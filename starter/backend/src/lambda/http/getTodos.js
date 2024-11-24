@@ -1,13 +1,13 @@
 import { DynamoDB } from '@aws-sdk/client-dynamodb'
 import { DynamoDBDocument } from '@aws-sdk/lib-dynamodb'
 
-const dynamoDbClient = DynamoDBDocument.from(new DynamoDB())
+const dynamoDbDocument = DynamoDBDocument.from(new DynamoDB())
 const todoTable = process.env.TODO_TABLE
 
 export async function handler(event) {
 	console.log("query dynamodb")
 	try {
-        	const result = await dynamoDbClient.scan({
+        	const result = await dynamoDbDocument.scan({
             		TableName: todoTable
         	});
         	const items = result.Items;
