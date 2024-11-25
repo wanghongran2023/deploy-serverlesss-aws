@@ -24,7 +24,7 @@ export async function createTodo(userId,newTodoContent){
 		attachmentUrl: 'https://'+bucketName+'.s3.amazonaws.com/'+todoId+'.png',
 		...newTodoContent
 	}
-    return await todosAccess.createTodos(userId)
+    return await todosAccess.createTodos(newTodo)
 }
 
 export async function deleteTodo(userId,todoId){
