@@ -15,7 +15,7 @@ export async function getTodos(userId){
 export async function createTodo(userId,newTodoContent){
     logger.info("Start create Todo for user "+userId)
     const todoId=uuidv4()
-    bucketName=attachmentUtils.getBucketName()
+    const bucketName=attachmentUtils.getBucketName()
     const newTodo ={
 		userId: userId,
 		todoId: todoId,

@@ -5,7 +5,7 @@ export async function handler(event) {
 	const newTodoContent = JSON.parse(event.body)
     const userId = getUserId(event)
 	try {
-       	newTodo = await createTodo(userId,newTodoContent)
+       	const newTodo = await createTodo(userId,newTodoContent)
         return {
            		statusCode: 201,
         		headers: {
