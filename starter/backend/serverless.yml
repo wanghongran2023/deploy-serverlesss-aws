@@ -21,26 +21,9 @@ provider:
     CREATE_TODO_ROLE: lambda-role-create-todo
     UPDATE_TODO_ROLE: lambda-role-update-todo
     DELETE_TODO_ROLE: lambda-role-delete-todo
-  
-  iam:
-    role:
-      statements:
-        - Effect: Allow
-          Action:
-            - s3:PutObject
-            - s3:GetObject
-          Resource: arn:aws:s3:::${self:provider.environment.S3_BUCKET}/*
-        - Effect: Allow
-          Action:
-            - xray:PutTraceSegments
-            - xray:PutTelemetryRecords
-            - xray:GetSamplingRules
-            - xray:GetSamplingTargets
-            - xray:GetSamplingStatisticSummaries
-          Resource: "*"
+    GENERATE_URL_ROLE: lambda-role-s3 
 
 functions:
-
   Auth:
     handler: src/lambda/auth/auth0Authorizer.handler
 
@@ -60,7 +43,14 @@ functions:
         Action:
           - dynamodb:Query        
         Resource: arn:aws:dynamodb:us-east-1:765848051216:table/${self:provider.environment.TODO_TABLE}
-
+      - Effect: "Allow"
+        Action:
+          - xray:PutTraceSegments
+          - xray:PutTelemetryRecords
+          - xray:GetSamplingRules
+          - xray:GetSamplingTargets
+          - xray:GetSamplingStatisticSummaries
+        Resource: "*"
 
   # TODO: Configure this function
   CreateTodo:
@@ -81,6 +71,15 @@ functions:
         Action:
           - dynamodb:PutItem
         Resource: arn:aws:dynamodb:us-east-1:765848051216:table/${self:provider.environment.TODO_TABLE}
+      - Effect: "Allow"
+        Action:
+          - xray:PutTraceSegments
+          - xray:PutTelemetryRecords
+          - xray:GetSamplingRules
+          - xray:GetSamplingTargets
+          - xray:GetSamplingStatisticSummaries
+        Resource: "*"
+
 
   # TODO: Configure this function
   UpdateTodo:
@@ -101,6 +100,15 @@ functions:
         Action:
           - dynamodb:UpdateItem
         Resource: arn:aws:dynamodb:us-east-1:765848051216:table/${self:provider.environment.TODO_TABLE}
+      - Effect: "Allow"
+        Action:
+          - xray:PutTraceSegments
+          - xray:PutTelemetryRecords
+          - xray:GetSamplingRules
+          - xray:GetSamplingTargets
+          - xray:GetSamplingStatisticSummaries
+        Resource: "*"
+
 
   # TODO: Configure this function
   DeleteTodo:
@@ -118,6 +126,15 @@ functions:
         Action:
           - dynamodb:DeleteItem
         Resource: arn:aws:dynamodb:us-east-1:765848051216:table/${self:provider.environment.TODO_TABLE}
+      - Effect: "Allow"
+        Action:
+          - xray:PutTraceSegments
+          - xray:PutTelemetryRecords
+          - xray:GetSamplingRules
+          - xray:GetSamplingTargets
+          - xray:GetSamplingStatisticSummaries
+        Resource: "*"
+
 
   # TODO: Configure this function
   GenerateUploadUrl:
@@ -129,6 +146,13 @@ functions:
           cors: true
           authorizer:
             arn: ${self:provider.environment.AUTH_ARN}
+    iamRoleStatementsName:  ${self:provider.environment.GENERATE_URL_ROLE}
+    iamRoleStatements:
+      - Effect: "Allow"
+        Action:
+          - s3:PutObject
+          - s3:GetObject
+        Resource: arn:aws:s3:::${self:provider.environment.S3_BUCKET}/*
 
 resources:
   Resources:
