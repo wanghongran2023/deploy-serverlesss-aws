@@ -1,12 +1,6 @@
-import { DynamoDB } from '@aws-sdk/client-dynamodb';
-import { DynamoDBDocument } from '@aws-sdk/lib-dynamodb';
-import AWSXRay from 'aws-xray-sdk-core'
+import { deleteTodo } from '../../businessLogic/todos.mjs';
 import { getUserId } from '../utils.mjs'
 
-const dynamoDb = new DynamoDB()
-const dynamoDbXRay = AWSXRay.captureAWSv3Client(dynamoDb)
-const dynamoDbDocument = DynamoDBDocument.from(dynamoDbXRay)
-const todoTable = process.env.TODO_TABLE;
 
 export async function handler(event) {
 	const todoId = event.pathParameters.todoId
@@ -14,14 +8,7 @@ export async function handler(event) {
 	const userId = getUserId(event)
 
 	try {
-		const result = await dynamoDbDocument.delete({
-			TableName: todoTable,
-            		Key: {
-				userId: userId,
-				todoId: todoId
-			}
-		});
-
+		await deleteTodo(userId,todoId)
 		return {
 			statusCode: 200,
 			headers: {
@@ -31,11 +18,11 @@ export async function handler(event) {
 			body: null
 		};
 	} catch (error) {
-		console.error('Error deleting item from DynamoDB:', error);
 		return {
 			statusCode: 500,
 			body: JSON.stringify({ message: 'Internal Server Error' })
 		};
 	}
 }
+
 
