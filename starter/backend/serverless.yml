@@ -18,7 +18,7 @@ provider:
     URL_EXPIRATION: 36000
     AUTH_ARN: arn:aws:lambda:us-east-1:765848051216:function:serverless-todo-app-dev-Auth
     GET_TODO_ROLE: lambda-role-get-todo
-    GREATE_TODO_ROLE: lambda-role-create-todo
+    CREATE_TODO_ROLE: lambda-role-create-todo
     UPDATE_TODO_ROLE: lambda-role-update-todo
     DELETE_TODO_ROLE: lambda-role-delete-todo
   
