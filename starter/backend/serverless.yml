@@ -39,9 +39,6 @@ provider:
             - xray:GetSamplingStatisticSummaries
           Resource: "*"
 
-plugins:
-  - serverless-iam-roles-per-function
-
 functions:
 
   Auth:
