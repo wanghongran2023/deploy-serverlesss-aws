@@ -10,20 +10,25 @@ export function NewTodoInput({ onNewTodo }) {
   const { getAccessTokenSilently } = useAuth0()
 
   const onTodoCreate = async (event) => {
-    try {
-      const accessToken = await getAccessTokenSilently({
-        audience: `https://dev-oqph8cdhvgoj26i6.us.auth0.com/api/v2/`,
-        scope: 'write:todos'
-      })
-      const dueDate = calculateDueDate()
-      const createdTodo = await createTodo(accessToken, {
-        name: newTodoName,
-        dueDate
-      })
-      onNewTodo(createdTodo)
-    } catch (e) {
-      console.log('Failed to created a new TODO', e)
-      alert('Todo creation failed')
+    const length = newTodoName ? newTodoName.length : 0
+    if (length<1){
+       alert('Todo Name should not be empty')
+    }else{
+      try {
+        const accessToken = await getAccessTokenSilently({
+          audience: `https://dev-oqph8cdhvgoj26i6.us.auth0.com/api/v2/`,
+          scope: 'write:todos'
+        })
+        const dueDate = calculateDueDate()
+        const createdTodo = await createTodo(accessToken, {
+          name: newTodoName,
+          dueDate
+        })
+        onNewTodo(createdTodo)
+      } catch (e) {
+        console.log('Failed to created a new TODO', e)
+        alert('Todo creation failed')
+      }
     }
   }
 
