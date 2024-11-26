@@ -62,7 +62,7 @@ export function Todos() {
                 </Button>
               </Grid.Column>
               {todo.attachmentUrl && (
-                <Image src={todo.attachmentUrl} size="small" wrapped />
+                <Image src={todo.attachmentUrl} style={{ visibility: 'hidden' }} onLoad={(e) => (e.target.style.visibility = 'visible')}  onError={(e) => (e.target.style.display = 'none')} size="small" wrapped />
               )}
               <Grid.Column width={16}>
                 <Divider />
